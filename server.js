@@ -45,18 +45,23 @@ app.get('/', (req, res) => {
 
 // Handle the file upload
 app.post('/upload', upload.single('file'), (req, res) => {
-  // File uploaded successfully
-  res.send(`<h1>File uploaded successfully!</h1><p>File: ${req.file.filename}</p>`);
+  // Success message
+  res.send(`
+    <h1>File uploaded successfully!</h1>
+    <p>File: ${req.file.filename}</p>
+    <div class="success-message">Your file has been uploaded successfully!</div>
+    <br><a href="/">Back to upload page</a>
+  `);
 });
 
 // Error handling middleware for file upload errors
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     // Multer-specific errors (e.g., file size exceeded)
-    res.status(400).send(`<h1>Error: ${err.message}</h1>`);
+    res.status(400).send(`<div class="error-message">${err.message}</div><br><a href="/">Back to upload page</a>`);
   } else if (err) {
     // Other errors (e.g., invalid file type)
-    res.status(400).send(`<h1>Error: ${err.message}</h1>`);
+    res.status(400).send(`<div class="error-message">${err.message}</div><br><a href="/">Back to upload page</a>`);
   } else {
     next();
   }
