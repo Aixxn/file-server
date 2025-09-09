@@ -5,6 +5,8 @@ const fs = require('fs');
 
 // Create an Express app
 const app = express();
+// Serve static files (CSS, JS, images)
+app.use(express.static(__dirname));
 const PORT = process.env.PORT || 3000;
 
 // Set up multer storage configuration
